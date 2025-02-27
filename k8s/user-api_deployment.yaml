@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: user-api
+    app.kubernetes.io/component: api
+    app.kubernetes.io/instance: user-api
+    app.kubernetes.io/name: user-api
+    app.kubernetes.io/part-of: payments-context
+    app.openshift.io/runtime: dotnet
+  name: user-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-api
+  template:
+    metadata:
+      labels:
+        app: user-api
+        deploymentconfig: user-api
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: user-configmap
+        - secretRef:
+            name: user-secret
+        image: user-api
+        imagePullPolicy: Never
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5
+        name: user-api
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          successThreshold: 1
+        resources:
+          limits:
+            cpu: 400m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        startupProbe:
+          failureThreshold: 35
+          httpGet:
+            path: /health/startup
+            port: 8080
+          periodSeconds: 6

@@ -1,0 +1,30 @@
+{
+  "source" : "Premise Processor service",
+  "upsertOn" : {
+    "$date" : 1705946387359
+  },
+  "upsertBy" : "backgroundService",
+  "correlationId" : "abd7d71d64c4403aa29a0963426a23ba",
+  "isActive" : true,
+  "premiseNumber" : 1854804941,
+  "addressId" : 1584890543,
+  "compressedAddress" : "69 Hassie Coves, East Monroe, KY, 11313",
+  "calculatedAddress" : "504 Bartoletti Route, 47, West Alexaneland, ME, 81537",
+  "streetNumber" : "504",
+  "apartment" : "47",
+  "streetName" : "Bartoletti Route",
+  "city" : "West Alexaneland",
+  "zipcode" : 81537,
+  "state" : "ME",
+  "gasMeterCode" : "Overflow_Meter_5",
+  "electricMeterCode" : "Overflow_Meter_7",
+  "companyCode" : "Niagara_Mohawk",
+  "premiseStatus" : "PendingActive",
+  "streetStatus" : "Void",
+  "streetSuffixCode" : null,
+  "addressSuffixCode" : null,
+  "workflowStatus" : "Combined",
+  "isPremiseActive" : true,
+  "isAddressActive" : true,
+  "isMeterActive" : true
+}

@@ -1,0 +1,186 @@
+apiVersion: v1
+data:
+  AccountSettingsStitching__ApiUrl: internal/account-settings-api/graphql/
+  AccountSettingsStitching__BaseUrl: http://account-settings-api:8080/
+  AccountSettingsStitching__FieldName: accountSettings
+  AccountSettingsStitching__FieldType: AccountSettingsResponse
+  AccountSettingsStitching__Parameters: '{"accountNumber": "Number" }'
+  AccountSettingsStitching__PropertyNameInBoundedContext: accountSettings
+  AccountSettingsStitching__Query: query($accountNumber:String!) { accountSettings(accountNumber:$accountNumber)
+    [contextQuery] }
+  ApiConfig__BaseUrl: http://billing-account-api:8080
+  ApiConfig__DerivedFieldsPutUrl: internal/derived-fields
+  ApiConfig__RecurringPayPutUrl: http://billing-account-api:8080/internal/recurring-pay
+  AzureEventHub__EnableAutoCommit: "false"
+  AzureEventHub__MessageSendMaxRetries: "2"
+  AzureEventHub__MetadataMaxAgeMs: "180000"
+  AzureEventHub__SessionTimeoutMs: "30000"
+  AzureEventHub__SocketKeepaliveEnable: "true"
+  AzureEventHub__SocketTimeoutMs: "5000"
+  BalancedBillingStitching__ApiUrl: internal/balanced-billing-api/graphql/
+  BalancedBillingStitching__BaseUrl: http://balanced-billing-api:8080/
+  BalancedBillingStitching__FieldName: balancedBilling
+  BalancedBillingStitching__FieldType: BalancedBillingResponse
+  BalancedBillingStitching__Parameters: '{"accountNumber": "Number" }'
+  BalancedBillingStitching__PropertyNameInBoundedContext: balancedBilling
+  BalancedBillingStitching__Query: query($accountNumber:String!) { balancedBilling(
+    accountNumber:$accountNumber) [contextQuery] }
+  BillStitching__ApiUrl: internal/bill-api/graphql/
+  BillStitching__BaseUrl: http://bill-api:8080/
+  BillStitching__FieldName: bills
+  BillStitching__FieldType: BillsConnection
+  BillStitching__Parameters: '{"accountNumber":"Number"}'
+  BillStitching__PropertyNameInBoundedContext: bills
+  BillStitching__Query: query($accountNumber:String!) { bills(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  COMPlus_EnableDiagnostics: "0"
+  ChangeStreamEventConfig__BatchSize: "500"
+  ChangeStreamEventConfig__QueueSize: "500"
+  ChangeStreamEventConfig__StartAtOperationTime: ""
+  CollectionArrangementStitching__ApiUrl: internal/collections-arrangement-api/graphql/
+  CollectionArrangementStitching__BaseUrl: http://collections-arrangement-api:8080/
+  CollectionArrangementStitching__FieldName: collectionArrangements
+  CollectionArrangementStitching__FieldType: CollectionArrangementsConnection
+  CollectionArrangementStitching__Parameters: '{"accountNumber":"Number"}'
+  CollectionArrangementStitching__PropertyNameInBoundedContext: collectionArrangements
+  CollectionArrangementStitching__Query: query($accountNumber:String!) { collectionArrangements(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  ConfigSettings__BillingAccountTopicName: cxp.billing-account.data-updates
+  ConfigSettings__DerivedFieldsTopicName: cxp.derived-field-service.data-updates
+  ConfigSettings__RecurringPayTopicName: cxp.recurring-pay.data-updates
+  ConfigSettings__UserBillingAccountTopicName: udm.agg.userbillingaccountinfo
+  ConfluentCluster__AutoOffsetReset: Earliest
+  ConfluentCluster__BootstrapServers: kafka:9092
+  ConfluentCluster__GroupId: billing-account-user-account-consumer
+  ConfluentCluster__SecurityProtocol: ""
+  ConfluentSchemaRegistry__Url: http://schema-registry-svc:8082
+  CutOutNonPayReconnectCollectionActivityStitching__ApiUrl: internal/collection-activity-api/graphql/
+  CutOutNonPayReconnectCollectionActivityStitching__BaseUrl: http://collection-activity-api:8080/
+  CutOutNonPayReconnectCollectionActivityStitching__FieldName: cutOutNonPayReconnect
+  CutOutNonPayReconnectCollectionActivityStitching__FieldType: CutOutNonPayReconnectResponse
+  CutOutNonPayReconnectCollectionActivityStitching__Parameters: '{"accountNumber":"Number","collectionStatus":"CollectionStatus",
+    "lastCollectionActionCssCode":"LastCollectionActionCssCode"}'
+  CutOutNonPayReconnectCollectionActivityStitching__PropertyNameInBoundedContext: cutOutNonPayReconnect
+  CutOutNonPayReconnectCollectionActivityStitching__Query: query($accountNumber:String!,$collectionStatus:String,
+    $lastCollectionActionCssCode:String) { cutOutNonPayReconnect(accountNumber:$accountNumber,collectionStatus:$collectionStatus,lastCollectionActionCssCode:$lastCollectionActionCssCode,[Arguments])
+    [contextQuery] }
+  DatabaseSettings__BillingAccountAuditCollectionName: billingAccountAudits
+  DatabaseSettings__BillingAccountCollectionName: billingAccountDetails
+  DatabaseSettings__BillingAccountServiceAddressCollectionName: serviceAddresses
+  DatabaseSettings__ChangeStreamConfigCollectionName: changeStreamConfig
+  DatabaseSettings__DatabaseName: billingAccountDb
+  DatabaseSettings__DlqCollection: errors
+  DatabaseSettings__ErrorCollectionName: errors
+  DatabaseSettings__ErrorDatabaseName: errorDb
+  DatabaseSettings__MaxConnecting: "50"
+  DatabaseSettings__MaxConnectionPoolSize: "1000"
+  DatabaseSettings__MessagingDatabase: errorDb
+  DatabaseSettings__MessagingErrorHandlingStrategy: MongoDb
+  DatabaseSettings__UserBillingAccountCollectionName: userBillingAccounts
+  EnergyUsageStitching__ApiUrl: internal/energy-usage-api/graphql/
+  EnergyUsageStitching__BaseUrl: http://energy-usage-api:8080/
+  EnergyUsageStitching__FieldName: energyUsages
+  EnergyUsageStitching__FieldType: EnergyUsageConnection
+  EnergyUsageStitching__Parameters: '{"accountNumber":"Number"}'
+  EnergyUsageStitching__PropertyNameInBoundedContext: energyUsages
+  EnergyUsageStitching__Query: query($accountNumber:String!) { energyUsages(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  Environment: Development
+  GraphQlIntrospectionEnabled: "true"
+  MailingAddressStitching__ApiUrl: internal/address-api/graphql/
+  MailingAddressStitching__BaseUrl: http://address-api:8080/
+  MailingAddressStitching__FieldName: mailingAddress
+  MailingAddressStitching__FieldType: Address
+  MailingAddressStitching__Parameters: '{"accountNumber": "Number" }'
+  MailingAddressStitching__PropertyNameInBoundedContext: mailingAddress
+  MailingAddressStitching__Query: query($accountNumber:String!) { mailingAddress(accountNumber:$accountNumber)
+    [contextQuery] }
+  OneTimePaymentStitching__ApiUrl: internal/payment-api/graphql/
+  OneTimePaymentStitching__BaseUrl: http://payment-api:8080/
+  OneTimePaymentStitching__FieldName: activeOneTimePayments
+  OneTimePaymentStitching__FieldType: ActiveOneTimePaymentsConnection
+  OneTimePaymentStitching__Parameters: '{"accountNumber":"Number"}'
+  OneTimePaymentStitching__PropertyNameInBoundedContext: activeOneTimePayments
+  OneTimePaymentStitching__Query: query($accountNumber:String!) { activeOneTimePayments(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  PaperlessBillingStitching__ApiUrl: internal/paperless-billing-api/graphql/
+  PaperlessBillingStitching__BaseUrl: http://paperless-billing-api:8080/
+  PaperlessBillingStitching__FieldName: paperlessBilling
+  PaperlessBillingStitching__FieldType: PaperlessBillingAccountResponse
+  PaperlessBillingStitching__Parameters: '{"accountNumber": "Number" }'
+  PaperlessBillingStitching__PropertyNameInBoundedContext: paperlessBilling
+  PaperlessBillingStitching__Query: query($accountNumber:String!) { paperlessBilling(
+    accountNumber:$accountNumber) [contextQuery] }
+  PayByBankStitching__ApiUrl: internal/pay-by-bank-api/graphql/
+  PayByBankStitching__BaseUrl: http://pay-by-bank-api:8080/
+  PayByBankStitching__FieldName: payByBank
+  PayByBankStitching__FieldType: PayByBankResponse
+  PayByBankStitching__Parameters: '{"billingAccountNumber":"Number"}'
+  PayByBankStitching__PropertyNameInBoundedContext: payByBank
+  PayByBankStitching__Query: query($billingAccountNumber:String!) { payByBank(billingAccountNumber:$billingAccountNumber,[Arguments])
+    [contextQuery] }
+  PaymentPlanStitching__ApiUrl: internal/payment-plan-api/graphql/
+  PaymentPlanStitching__BaseUrl: http://payment-plan-api:8080
+  PaymentPlanStitching__FieldName: paymentPlans
+  PaymentPlanStitching__FieldType: PaymentPlansConnection
+  PaymentPlanStitching__Parameters: '{"accountNumber":"Number"}'
+  PaymentPlanStitching__PropertyNameInBoundedContext: paymentPlans
+  PaymentPlanStitching__Query: query($accountNumber:String!) { paymentPlans(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  PaymentStitching__ApiUrl: internal/payment-api/graphql/
+  PaymentStitching__BaseUrl: http://payment-api:8080/
+  PaymentStitching__FieldName: payments
+  PaymentStitching__FieldType: PaymentsConnection
+  PaymentStitching__Parameters: '{"accountNumber":"Number"}'
+  PaymentStitching__PropertyNameInBoundedContext: payments
+  PaymentStitching__Query: query($accountNumber:String!) { payments(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  PremiseStitching__ApiUrl: premise-api/graphql/
+  PremiseStitching__BaseUrl: http://premise-api:8080/
+  PremiseStitching__FieldName: premise
+  PremiseStitching__FieldType: PremiseResponse
+  PremiseStitching__Parameters: '{"premiseNumber": "PremiseNumber" }'
+  PremiseStitching__PropertyNameInBoundedContext: premise
+  PremiseStitching__Query: query($premiseNumber:Int!) { premise( premiseNumber:$premiseNumber)
+    { nodes [contextQuery] } }
+  RecurringPayStitching__ApiUrl: internal/recurring-pay-api/graphql/
+  RecurringPayStitching__BaseUrl: http://recurring-pay-api:8080
+  RecurringPayStitching__FieldName: recurringPay
+  RecurringPayStitching__FieldType: RecurringPayResponse
+  RecurringPayStitching__Parameters: '{"accountNumber":"Number"}'
+  RecurringPayStitching__PropertyNameInBoundedContext: recurringPay
+  RecurringPayStitching__Query: query($accountNumber:String!) { recurringPay(accountNumber:$accountNumber,[Arguments])
+    [contextQuery] }
+  ResilienceSettings__BackOffFactorForRetryAttempt: "0.5"
+  ResilienceSettings__InProcessRetryCount: "3"
+  Toggles__EnableAccountLinkAuthorization: "true"
+  Toggles__EnableAccountSettingsStitching: "true"
+  Toggles__EnableAddressStitching: "false"
+  Toggles__EnableBalancedBillingEligibility: "true"
+  Toggles__EnableBalancedBillingStitching: "true"
+  Toggles__EnableBulkWriteInAudit: "true"
+  Toggles__EnableBulkWriteRetry: "true"
+  Toggles__EnableDlqErrorHandling: "true"
+  Toggles__EnableMailingAddressStitching: "false"
+  Toggles__EnableOneTimePaymentStitching: "true"
+  Toggles__EnableOpenTelemetry: "true"
+  Toggles__EnableOptimization: "true"
+  Toggles__EnablePaperlessBillingStitching: "true"
+  Toggles__EnablePhoneNumberActivityStitching: "false"
+  Toggles__EnablePremiseStitching: "false"
+  UseServiceAddressAsMailingAddressStitching__ApiUrl: internal/address-api/graphql/
+  UseServiceAddressAsMailingAddressStitching__BaseUrl: http://address-api:8080/
+  UseServiceAddressAsMailingAddressStitching__FieldName: useServiceAddressAsMailingAddress
+  UseServiceAddressAsMailingAddressStitching__FieldType: Boolean
+  UseServiceAddressAsMailingAddressStitching__Parameters: '{"accountNumber": "Number"
+    }'
+  UseServiceAddressAsMailingAddressStitching__PropertyNameInBoundedContext: useServiceAddressAsMailingAddress
+  UseServiceAddressAsMailingAddressStitching__Query: query($accountNumber:String!)
+    { useServiceAddressAsMailingAddress(accountNumber:$accountNumber) }
+  WebClientConfiguration__AccountLinkBaseUrl: http://account-link-api:8080/
+  WebClientConfiguration__AccountLinkInternalRestEndpoint: internal/accountLinks
+  WebClientConfiguration__BillingAccountBaseUrl: http://billing-account-api:8080/
+  WebClientConfiguration__BillingAccountInternalGraphEndpoint: internal/billing-account-api/graphql
+kind: ConfigMap
+metadata:
+  name: billing-account-configmap

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: account-link-api
+    app.kubernetes.io/component: api
+    app.kubernetes.io/instance: account-link-api
+    app.kubernetes.io/name: account-link-api
+    app.kubernetes.io/part-of: billing-context
+    app.openshift.io/runtime: dotnet
+  name: account-link-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-link-api
+  template:
+    metadata:
+      labels:
+        app: account-link-api
+        deploymentconfig: account-link-api
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: account-link-configmap
+        - secretRef:
+            name: account-link-secret
+        image: account-link-api:latest
+        imagePullPolicy: Never
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        name: account-link-api
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          successThreshold: 1
+        resources:
+          limits:
+            cpu: 600m
+            memory: 1024Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        startupProbe:
+          failureThreshold: 35
+          httpGet:
+            path: /health/startup
+            port: 8080
+          periodSeconds: 6
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-dir
+      volumes:
+      - emptyDir: {}
+        name: tmp-dir

@@ -1,0 +1,12 @@
+{
+  "qa": {
+    "name": "QA",
+    "context": "225063-dev-eus2-duwp-aks-01",
+    "namespace": "cxp-uwp2-qa"
+  },
+  "uat": {
+    "name": "UAT",
+    "context": "6584-uat-eus2-duwp-aks-01",
+    "namespace": "cxp-uwp2-uat"
+  }
+}
