@@ -1,0 +1,151 @@
+name: Generate CSV files
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  generate-dev-deployment-file:
+    name: Generate dev deployment file
+    runs-on: uwp2-runners
+    environment: dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate dev deployments
+        uses: nationalgrid-customer/uwp2-environments/.github/actions/create-aks-deployment-file@main
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          aks-resource-group: ${{ vars.AKS_RESOURCE_GROUP }}
+          aks-cluster: ${{ vars.AKS_CLUSTER }}
+          environment: dev
+
+  generate-qa-deployment-file:
+    name: Generate qa deployment file
+    runs-on: uwp2-runners
+    environment: dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate qa deployments
+        uses: nationalgrid-customer/uwp2-environments/.github/actions/create-aks-deployment-file@main
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          aks-resource-group: ${{ vars.AKS_RESOURCE_GROUP }}
+          aks-cluster: ${{ vars.AKS_CLUSTER }}
+          environment: qa
+
+  generate-uat-deployment-file:
+    name: Generate uat deployment file
+    runs-on: uwp2-runners
+    environment: uat
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate uat deployment
+        uses: nationalgrid-customer/uwp2-environments/.github/actions/create-aks-deployment-file@main
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          aks-resource-group: ${{ vars.AKS_RESOURCE_GROUP }}
+          aks-cluster: ${{ vars.AKS_CLUSTER }}
+          environment: uat
+
+  generate-npd-deployment-file:
+    name: Generate npd deployment file
+    runs-on: uwp2-runners
+    environment: npd
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate npd deployment
+        uses: nationalgrid-customer/uwp2-environments/.github/actions/create-aks-deployment-file@main
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          aks-resource-group: ${{ vars.AKS_RESOURCE_GROUP }}
+          aks-cluster: ${{ vars.AKS_CLUSTER }}
+          environment: npd
+
+  generate-prod-deployment-file:
+    name: Generate prod deployment file
+    runs-on: uwp2-runners
+    environment: prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate prod deployment
+        uses: nationalgrid-customer/uwp2-environments/.github/actions/create-aks-deployment-file@main
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          aks-resource-group: ${{ vars.AKS_RESOURCE_GROUP }}
+          aks-cluster: ${{ vars.AKS_CLUSTER }}
+          environment: prod
+
+  merge-artifacts:
+    name: Merge artifacts
+    runs-on: ubuntu-latest
+    needs: [ generate-dev-deployment-file, generate-qa-deployment-file, generate-uat-deployment-file, generate-npd-deployment-file, generate-prod-deployment-file ]
+    steps:
+      - name: Merge artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: deployments
+          pattern: '*-deployments'
+          delete-merged: true
+
+  generate-csv:
+    name: Generate CSV files
+    runs-on: uwp2-runners
+    needs: merge-artifacts
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Download deployment files
+        uses: actions/download-artifact@v4
+        with:
+          name: deployments
+          path: ./deployments
+      
+      - name: Generate CSV
+        run: |
+          .\scripts\generate-deployment-csv.ps1 -JsonFilesPath ./deployments/ -OutputFilePath .
+        shell: pwsh
+      
+      - name: Upload CSV files artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: csv-files
+          path: ./*.csv
+
+  update-repo:
+    name: Update repo
+    runs-on: uwp2-runners
+    needs: generate-csv
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Download deployment files
+        uses: actions/download-artifact@v4
+        with:
+          name: csv-files
+          path: ./csv/
+
+      - name: Get current timestamp in EST
+        id: timestamp
+        run: echo "timestamp=$(TZ='America/New_York' date '+%Y-%m-%d %H:%M:%S EST')" >> $GITHUB_ENV
+
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add csv/*.csv
+          git commit -m "${{ env.timestamp }} - Update CSV files" || echo "No changes to commit"
+          git push

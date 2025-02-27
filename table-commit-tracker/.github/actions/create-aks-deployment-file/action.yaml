@@ -1,0 +1,36 @@
+name: Create AKS Deployment File
+description: Create a JSON document with the current deployments in an AKS cluster
+inputs:
+  azure-credentials:
+    description: "The credentials used to login to Azure used by the azure/login GitHub Action: https://github.com/marketplace/actions/azure-login#creds"
+    required: true
+  aks-resource-group:
+    description: "The name of the resource group the AKS cluster is in"
+    required: true
+  aks-cluster:
+    description: "The name of the AKS cluster"
+    required: true
+  environment:
+    description: "The environment to run against (int, dev, qa, uat, npd, prod)."
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: AKS login
+      uses: nationalgrid-customer/cxp-workflows/.github/actions/aks-login@v1.2
+      with:
+        azure-credentials: ${{ inputs.azure-credentials }}
+        aks-resource-group: ${{ inputs.aks-resource-group }}
+        aks-cluster: ${{ inputs.aks-cluster }}
+
+    - name: Generate deployment JSON
+      run: |
+        kubectl get deployment -n 'cxp-uwp2-${{ inputs.environment }}' -o json \
+          | jq '[.items[] | {environment: "${{ inputs.environment }}", name: .metadata.name, replicas: .spec.replicas, image: (.spec.template.spec.containers[0].image | gsub(".*/"; ""))}]' > ${{ inputs.environment }}-deployments.json
+      shell: bash
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.environment }}-deployments
+        path: ${{ inputs.environment }}-deployments.json
